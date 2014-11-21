@@ -3,18 +3,18 @@
     "remote": "cm",
     "repository": "android_device_qcom_common",
     "target_path": "device/qcom/common",
-    "revision": "cm-11.0"
+    "revision": "cm-12.0"
   },
   {
-    "remote": "gh",
-    "repository": "DJLaMontagneIII/android_kernel_motorola_ghost",
+    "remote": "cm",
+    "repository": "android_kernel_motorola_ghost",
     "target_path": "kernel/motorola/ghost",
-    "revision": "DJL11"
+    "revision": "cm-12.0"
   },
 {
     "remote": "tm",
     "repository": "proprietary_vendor_motorola",
     "target_path": "vendor/motorola",
-    "revision": "cm-11.0"
+    "revision": "cm-12.0"
   }
 ]

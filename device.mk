@@ -28,7 +28,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
@@ -133,12 +132,14 @@ PRODUCT_PACKAGES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # Motorola
 PRODUCT_PACKAGES += \
-    aplogd \
-    charge_only_mode \
+    charge_only_mode
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -183,30 +184,17 @@ PRODUCT_PACKAGES += \
     init.crda.sh \
     init.qcom.bt.sh \
     init.qcom.coex.sh \
-    init.qcom.efs.sync.sh \
-    init.qcom.fm.sh \
-    init.qcom.mdm_links.sh \
-    init.qcom.modem_links.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.thermal_conf.sh \
     init.qcom.wifi.sh \
     moto_com.sh \
     mount_pds.sh
 
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    init.class_main.sh \
     init.mmi.boot.sh \
     init.mmi.touch.sh \
-    init.qcom.class_core.sh \
-    init.qcom.early_boot.sh \
     init.qcom.rc \
-    init.qcom.sh \
-    init.qcom.syspart_fixup.sh \
     init.qcom.usb.rc \
-    init.qcom.usb.sh \
     init.recovery.qcom.rc \
-    init.target.rc \
     ueventd.qcom.rc
 
 # Support
@@ -215,8 +203,8 @@ PRODUCT_PACKAGES += \
     libxml2
 
 # Thermal
-PRODUCT_PACKAGES += \
-    thermald-ghost.conf
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/thermald-ghost.conf:system/etc/thermald-ghost.conf
 
 # Torch
 PRODUCT_PACKAGES += \
@@ -228,7 +216,11 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    libQWiFiSoftApCfg
+    dhcpcd.conf \
+    hostapd \
+    libQWiFiSoftApCfg \
+    wpa_supplicant \
+    wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd.accept:system/etc/hostapd/hostapd.accept \

@@ -89,21 +89,6 @@ trigger_wcnss()
 
 
 case "$target" in
-    msm8974*)
-      # link pronto modules
-      rm /system/lib/modules/wlan.ko
-      rm /system/lib/modules/cfg80211.ko
-      ln -s /system/lib/modules/pronto/pronto_wlan.ko /system/lib/modules/wlan.ko
-      ln -s /system/lib/modules/pronto/cfg80211.ko /system/lib/modules/cfg80211.ko
-
-      # The property below is used in Qcom SDK for softap to determine
-      # the wifi driver config file
-      setprop wlan.driver.config /data/misc/wifi/WCNSS_qcom_cfg.ini
-
-      # Trigger WCNSS platform driver
-      trigger_wcnss &
-      ;;
-
     msm8960*)
       wlanchip=""
 
@@ -178,16 +163,16 @@ case "$target" in
         setprop wlan.driver.ath 2
         rm  /system/lib/modules/wlan.ko
         ln -s /system/lib/modules/ath6kl-3.5/ath6kl_usb.ko \
-		/system/lib/modules/wlan.ko
+            /system/lib/modules/wlan.ko
         rm /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
         rm /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin_usb \
-		/system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
+            /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin_usb \
-		/system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
+            /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
         rm /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin_usb \
-		/system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
+            /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
         ;;
       "AR6004-SDIO")
         setprop wlan.driver.ath 2
@@ -195,21 +180,21 @@ case "$target" in
         btsoc="ath3k"
         rm  /system/lib/modules/wlan.ko
         ln -s /system/lib/modules/ath6kl-3.5/ath6kl_sdio.ko \
-		/system/lib/modules/wlan.ko
+            /system/lib/modules/wlan.ko
         rm /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
         rm /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin_sdio \
-		/system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
+            /system/etc/firmware/ath6k/AR6004/hw1.3/fw.ram.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin_sdio \
-		/system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
+            /system/etc/firmware/ath6k/AR6004/hw1.3/bdata.bin
         rm /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
         ln -s /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin_sdio \
-		/system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
+            /system/etc/firmware/ath6k/AR6004/hw3.0/bdata.bin
         ;;
       *)
         echo "*** WI-FI chip ID is not specified in /persist/wlan_chip_id **"
         echo "*** Use the default WCN driver.                             **"
-        setprop wlan.driver.ath 0 
+        setprop wlan.driver.ath 0
         rm  /system/lib/modules/wlan.ko
         ln -s /system/lib/modules/prima/prima_wlan.ko /system/lib/modules/wlan.ko
         ln -s /system/lib/modules/prima/cfg80211.ko /system/lib/modules/cfg80211.ko
@@ -233,48 +218,6 @@ case "$target" in
         ;;
       esac
       ;;
-
-    msm7627a*)
-        wlanchip=`cat /persist/wlan_chip_id`
-        echo "The WLAN Chip ID is $wlanchip"
-        case "$wlanchip" in
-            "ATH6KL")
-             setprop wlan.driver.ath 1
-             rm  /system/lib/modules/wlan.ko
-             rm  /system/lib/modules/cfg80211.ko
-             ln -s /system/lib/modules/ath6kl/ath6kl_sdio.ko /system/lib/modules/wlan.ko
-             ln -s /system/lib/modules/ath6kl/cfg80211.ko /system/lib/modules/cfg80211.ko
-             ;;
-            "WCN1314")
-             setprop wlan.driver.ath 0
-             rm  /system/lib/modules/wlan.ko
-             rm  /system/lib/modules/cfg80211.ko
-             ln -s /system/lib/modules/volans/WCN1314_rf.ko /system/lib/modules/wlan.ko
-             ln -s /system/lib/modules/volans/cfg80211.ko /system/lib/modules/cfg80211.ko
-             ;;
-            *)
-             setprop wlan.driver.ath 1
-             rm  /system/lib/modules/wlan.ko
-             rm  /system/lib/modules/cfg80211.ko
-             ln -s /system/lib/modules/ath6kl/ath6kl_sdio.ko /system/lib/modules/wlan.ko
-             ln -s /system/lib/modules/ath6kl/cfg80211.ko /system/lib/modules/cfg80211.ko
-             echo "********************************************************************"
-             echo "*** Error:WI-FI chip ID is not specified in /persist/wlan_chip_id **"
-             echo "*******    WI-FI may not work    ***********************************"
-             ;;
-        esac
-    ;;
-
-    msm7627*)
-        ln -s /data/hostapd/qcom_cfg.ini /etc/firmware/wlan/qcom_cfg.ini
-        ln -s /persist/qcom_wlan_nv.bin /etc/firmware/wlan/qcom_wlan_nv.bin
-    ;;
-
-    msm8660*)
-    ;;
-
-    msm7630*)
-    ;;
 
     *)
       ;;
@@ -315,9 +258,9 @@ else
     hw_radio_reg_file="/system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_regulatory_$phone_hw_type.bin"
     default_reg_file="/system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_regulatory.bin"
     persist_reg_file="/persist/WCNSS_qcom_wlan_nv_regulatory_persist.bin"
-    
+
     echo "Well known HW type!! - Setting up WiFi Calibration for getprop reported HW type $phone_hw_type"
-    
+
     ### Setup CAL file softlinks
     isValidFile $hw_radio_cal_file
     if [ "$validFileRetVal" == 1 ]; then
@@ -337,7 +280,7 @@ else
             echo "!!WARNING!! INVALID DEFAULT CAL file $default_cal_file - rely on persist or driver defaults!!!"
         fi
     fi
-    
+
     ### Setup REG  file softlinks
     isValidFile $hw_radio_reg_file
     if [ "$validFileRetVal" == 1 ]; then
@@ -359,6 +302,3 @@ else
     fi
 fi
 ###### MOT - END CAL setup
-
-# Run audio init script
-/system/bin/sh /system/etc/init.qcom.audio.sh "$target" "$btsoc"
