@@ -99,6 +99,10 @@ TARGET_UNIFIED_DEVICE := true
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
+# Liquid stuff
+LIQUID_CHANGELOG := true
+LIQUIFY := true
+
 # Media
 TARGET_NO_ADAPTIVE_PLAYBACK := true
 
